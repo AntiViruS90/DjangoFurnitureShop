@@ -1,0 +1,37 @@
+{% extends 'index/base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load group_tag %}
+
+{% block content %}
+    {% if request.user|group_tag:"Provider" %}
+        <h1>Edit</h1>
+        <form method="post" class="product-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" name="save" class="btn btn-primary btn-md my-0 p">Save</button>
+        </form>
+    {% else %}
+        <h1>You don't have access here</h1>
+    {% endif %}
+{% endblock content %}
+
+{#{% extends 'index/base.html' %}#}
+{#{% load crispy_forms_tags %}#}
+{#{% load group_tag %}#}
+{##}
+{##}
+{#{% block content %}#}
+{#    {% if request.user|group_tag:"Provider"  %}#}
+{#    <h1>Edytuj</h1>#}
+{#    <form method="POST" class="product-form" enctype="multipart/form-data">#}
+{#        {% csrf_token %}#}
+{#        {{ form|crispy }}#}
+{#        <button type="submit" name="save" class="btn btn-primary btn-md my-0 p">Save</button>#}
+{#    </form>#}
+{#    #}
+{#    {% else %}#}
+{#    <h1>Nie masz tutaj dostępu</h1>#}
+{#    {% endif %}#}
+{##}
+{#{% endblock %}#}

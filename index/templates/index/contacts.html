@@ -1,0 +1,52 @@
+{% extends 'index/base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="container">
+        <h3 class="h3">Contacts</h3>
+
+
+        <script src="https://api-maps.yandex.ru/2.1/?apikey=2b10d3cb-b187-4410-9631-c26b2915e6b7&lang=en" type="text/javascript"></script>
+        <script>
+            ymaps.ready(init);
+
+            function init() {
+                var myMap = new ymaps.Map("map", {
+                    center: getRandomPoint(),
+                    zoom: 10
+                });
+                myMap.geoObjects.add(new ymaps.Placemark(myMap.getCenter(), {   // Добавляем маркер на карту
+                    balloonContent: 'Рандомная точка'
+                }, {
+                    preset: 'islands#icon',
+                    iconColor: '#0095b6'
+                }));
+            }
+
+            // Генерация рандомной точки на карте
+            function getRandomPoint() {
+                var latitude = 55.751244 + Math.random() * 0.2 - 0.1; // Широта Москвы +- 0.1
+                var longitude = 37.618423 + Math.random() * 0.2 - 0.1; // Долгота Москвы +- 0.1
+                return [latitude, longitude];
+            }
+        </script>
+
+        <div id="map" style="width: 100%; height: 400px;"></div>
+        <div class="form-control">
+            <p><img src="{% static 'image/office.png' %}" alt="Office" width="36px" height="36px">
+                Main office: <b>st. Furniture, 77; <em>Furniture City</em></b>
+            </p>
+        </div>
+        <div class="form-control">
+            <p><img src="{% static 'image/phone.png' %}" alt="Phone" width="36px" height="36px"> Technical support phone number: <strong
+                    style="color: #052c65; text-decoration: underline; cursor: pointer">+11 - 123-456-789</strong></p>
+            <p><img src="{% static 'image/mail.png' %}" alt="Email" width="36px" height="36px"> Technical support Email:
+                <a href="mailto:tech_support@furniture_city.com"><strong
+                    style="color: #052c65; text-decoration: underline; cursor: pointer"> tech_support@furniture_city.com</strong></a></p>
+        </div>
+    </div>
+
+
+
+{% endblock content %}

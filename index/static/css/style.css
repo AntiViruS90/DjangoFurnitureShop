@@ -1,0 +1,15 @@
+
+
+.span-input input{
+    width: 23vw;
+}
+@media (max-width: 766px){
+    .span-input input{
+        width: 100%;
+    }
+}
+@media (max-width: 500px){
+    .span-input input{
+        width: 100%;
+    }
+}

@@ -1,0 +1,62 @@
+{% extends 'index/base.html' %}
+{% load group_tag %}
+
+{% block content %}
+    <main>
+        <div class="container">
+            <div class="table-responsive text-nowrap">
+                <h2>Order summary</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">L.p.</th>
+                            <th scope="col">Product name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in order.products.all %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ product.product.name }}</td>
+                                <td>{{ product.product.price }}</td>
+                                <td>
+                                    <a href="{% url 'remove_single_product_from_cart' product.product.pk %}">
+                                        <i class="fa fa-minus mr-2"></i>{{ product.quantity }}</a>
+                                    <a href="{% url 'add_to_cart' product.product.pk %}"><i class="fa fa-plus ml-2"></i></a>
+                                </td>
+                                <td>$ {{ product.get_total_price }} <i class="fa fa-trush float-right"></i></td>
+                                <td><a href="{% url 'remove_from_cart' product.product.pk %}">
+                                    <i class="fa fa-plus ml-2"></i></a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5">Cart is empty</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <a href="/" class="btn btn-primary float-end">Continue shopping</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        {% if order.get_total %}
+                            <tr>
+                                <td colspan="4"><b>Total price</b></td>
+                                <td><b>$ {{ order.get_total }}</b></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <a href="/checkout/" class="btn btn-warning float-end ml-2">Buy now</a>
+                                    <a href="/" class="btn btn-primary float-end">Continue shopping</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+{% endblock content %}

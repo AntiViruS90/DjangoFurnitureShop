@@ -1,0 +1,14 @@
+{% extends 'index/base.html' %}
+{% load group_tag %}
+
+
+{% block content %}
+    {% if request.user|group_tag:"Customer" %}
+        <form action="" method="post" class="product-form">
+            {% csrf_token %}
+            <h2>Order has been placed</h2>
+        </form>
+    {% else %}
+        <h2>You don't have access here</h2>
+    {% endif %}
+{% endblock content %}

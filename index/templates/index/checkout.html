@@ -1,0 +1,32 @@
+{% extends 'index/base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load group_tag %}
+
+
+{% block content %}
+    <main>
+        <div class="container wow fadeIn">
+            <h2 class="my-5 h2 text-center">Cart</h2>
+            <div class="col-md-10 mb-4">
+                <div class="card">
+                    <form method="post" class="card-body">
+                        {% csrf_token %}
+                        <h3>Shipping address</h3>
+                        <div class="hideable_shipping_form">
+                            {{ form|crispy }}
+                        </div>
+                        <hr>
+                        <div class="col-md-8 mb-4">
+                            {% include 'index/order_snippet.html' %}
+                        </div>
+                        <hr class="mb-4">
+                        <button class="btn btn-primary btn-lg btn-block" type="submit"
+                                id="btn_checkout">Proceed to checkout
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}

@@ -1,0 +1,34 @@
+{% extends 'index/base.html' %}
+{% load group_tag %}
+
+{% block content %}
+    {% if request.user|group_tag:"Provider" %}
+        <form action="" method="post" class="product-form">
+            {% csrf_token %}
+            <h2>Are you sure you want to remove the product named: "{{ product.name }}"?</h2>
+            <button type="submit" name="Yes" href="/" class="btn btn-danger btn-md my-0 p">Yes</button>
+            <a href="{% url 'product_list' %}" class="btn btn-primary btn-md my-0 p">No</a>
+        </form>
+    {% else %}
+        <h1>You don't have access here!</h1>
+    {% endif %}
+{% endblock content %}
+
+{#{% extends 'index/base.html' %}#}
+{#{% load group_tag %}#}
+{##}
+{##}
+{#{% block content %}#}
+{#    {% if request.user|group_tag:"Provider" %}#}
+{#    #}
+{#    <form method="POST" class="product-form">#}
+{#        {% csrf_token %}#}
+{#        <h2>Czy napewno chcesz usunąć produkt o nazwie : "{{product.name}}"?</h2>#}
+{#        <button type="submit" name="Tak" href="/" class="btn btn-danger btn-md my-0 p">Tak</button>#}
+{#        <a class="btn btn-primary btn-md ml-2 my-0 p" href="{% url 'product_list' %}">Nie</a>#}
+{#    </form>#}
+{#    #}
+{#    {% else %}#}
+{#    <h1>Nie masz tutaj dostępu!</h1>#}
+{#    {% endif %}#}
+{#{% endblock %}#}
