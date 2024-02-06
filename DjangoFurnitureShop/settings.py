@@ -131,6 +131,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 DEFAULT_FROM_EMAIL = 'slava-nikitin-1990@mail.ru'
 EMAIL_HOST = 'smtp.mail.ru'

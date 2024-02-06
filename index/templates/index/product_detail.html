@@ -37,8 +37,7 @@
 {#            {% empty %}#}
 {#              <p>Комментариев пока нет.</p>#}
 {#            {% endfor %}#}
-            <a href="{% url 'add_to_cart' pk=product.pk %}" class="btn btn-primary btn-md my-0 mb-2 p">Add to cart
-                <i class="fa fa-shopping-cart ml-1"></i></a>
+            <a href="{% url 'add_to_cart' pk=product.pk %}" class="btn btn-primary btn-md my-0 mb-2 p">Add to cart</a>
             <a href="{% url 'remove_from_cart' pk=product.pk %}" class="btn btn-danger btn-md mb-2 my-0 p">Remove from cart</a>
         {% endif %}
     </div>

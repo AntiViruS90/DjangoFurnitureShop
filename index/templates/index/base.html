@@ -19,39 +19,63 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-md bg-primary navbar-dark" id="navbar" aria-label="Fourth navbar example">
-            <div class="container-fluid d-flex justify-content-between">
-                <a class="navbar-brand" href="/"> Furniture Shop</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarsExample04" aria-controls="navbarsExample04"
-                    aria-expanded="true" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <div class="container">
+            <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+                <a href="/" style="color: rgb(13 110 253)"
+                   class="fs-4 d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">Furniture Shop
+                </a>
 
-                <div class="navbar-collapse collapse" id="navbarsExample04">
-                    <ul class="navbar-nav me-auto mb-2 mb-md-0 text-white">
-                        {% if user.is_authenticated %}
-                            {% if request.user|group_tag:"Customer"  %}
-                                <li class="nav-item"><a class="nav-link" href="/cart">Cart</a></li>
-                            {% endif %}
-                        <li class="nav-item"><a class="nav-link" href="/logout/">Log out</a></li>
-                        {% else %}
-                            <li class="nav-item"><a class="nav-link" href="/register/">Register</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/login/">Log in</a></li>
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'contacts' %}">Contacts</a></li>
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="#">+9 (999) 999-99-99</a></li>
+                    {% if user.is_authenticated %}
+                        {% if request.user|group_tag:"Customer"  %}
+                            <li class="nav-item"><a class="btn btn-outline-primary me-2" href="/cart">Cart</a></li>
                         {% endif %}
-                        <li class="nav-item ">
-                            <a class="nav-link active" aria-current="page" href="{% url 'contacts' %}">About us</a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link active" aria-current="page" href="#">+9 (999) 999-99-99</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+                        <li class="nav-item"><a class="btn btn-outline-danger me-2" href="/logout/">Log out</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="btn btn-outline-primary me-2" href="/login/">Login</a></li>
+                        <li class="nav-item"><a class="btn btn-primary" href="/register/">Register</a></li>
+                    {% endif %}
+                </ul>
+            </header>
+        </div>
 
 
-        <div class="mt-0 pt-0 alert_div">
+
+{#        <nav class="navbar navbar-expand-md bg-primary navbar-dark" id="navbar" aria-label="Fourth navbar example">#}
+{#            <div class="container-fluid d-flex justify-content-between">#}
+{#                <a class="navbar-brand" href="/"> Furniture Shop</a>#}
+{#                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"#}
+{#                    data-bs-target="#navbarsExample04" aria-controls="navbarsExample04"#}
+{#                    aria-expanded="true" aria-label="Toggle navigation">#}
+{#                    <span class="navbar-toggler-icon"></span>#}
+{#                </button>#}
+{##}
+{#                <div class="navbar-collapse collapse" id="navbarsExample04">#}
+{#                    <ul class="navbar-nav me-auto mb-2 mb-md-0 text-white">#}
+{#                        {% if user.is_authenticated %}#}
+{#                            {% if request.user|group_tag:"Customer"  %}#}
+{#                                <li class="nav-item"><a class="nav-link" href="/cart">Cart</a></li>#}
+{#                            {% endif %}#}
+{#                        <li class="nav-item"><a class="nav-link" href="/logout/">Log out</a></li>#}
+{#                        {% else %}#}
+{#                            <li class="nav-item"><a class="nav-link" href="/register/">Register</a></li>#}
+{#                            <li class="nav-item"><a class="nav-link" href="/login/">Log in</a></li>#}
+{#                        {% endif %}#}
+{#                        <li class="nav-item ">#}
+{#                            <a class="nav-link active" aria-current="page" href="{% url 'contacts' %}">About us</a>#}
+{#                        </li>#}
+{#                        <li class="nav-item ">#}
+{#                            <a class="nav-link active" aria-current="page" href="#">+9 (999) 999-99-99</a>#}
+{#                        </li>#}
+{#                    </ul>#}
+{#                </div>#}
+{#            </div>#}
+{#        </nav>#}
+
+
+        <div class="container mt-0 pt-0" id="alert_div">
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -73,6 +97,7 @@
             </div>
         </div>
         <script src="{% static 'js/js.js' %}"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"

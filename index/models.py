@@ -102,3 +102,6 @@ class UserAddress(models.Model):
     house_unit_number = models.CharField(max_length=30, blank=True, null=True)
     post_code = models.CharField(max_length=30)
     city = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name

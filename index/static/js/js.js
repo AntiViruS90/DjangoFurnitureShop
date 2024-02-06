@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     $('#btn-close').click(function () {
-        $('alert_div').fadeOut('slow');
+        $('#alert_div').fadeOut();
     })
 
     $('#btn_checkout').click(function () {

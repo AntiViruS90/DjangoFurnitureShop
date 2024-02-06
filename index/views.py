@@ -16,7 +16,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 
 class ProductListView(ListView):
     model = Product
-    paginate_by = 3
+    paginate_by = 4
 
     def get_queryset(self):
         search_phrase = self.request.GET.get('search')
@@ -266,6 +266,38 @@ def remove_from_cart(request, pk):
         return redirect('product_detail', pk=pk)
 
 
+# @login_required
+# def remove_single_product_from_cart(request, pk):   #
+#     product = get_object_or_404(Product, pk=pk)     #
+#     order_qs = Order.objects.filter(        #
+#         user=request.user,      #
+#         ordered=False       #
+#     )
+#     if order_qs.exists():   #
+#         order = order_qs[0] #
+#         if order.products.filter(product__pk=product.pk).exists():  #
+#             order_product = OrderProduct.objects.filter(    #   order_product_qs
+#                 product=product,    #
+#                 user=request.user,  #
+#                 ordered=False       #
+#             )[0]        #
+#
+#             if order_product.quantity > 1:
+#                 order_product.quantity -= 1
+#                 order_product.save()
+#             else:
+#                 order.products.remove(order_product)
+#                 order_product.delete()
+#             messages.info(request, 'Quantity updated.')
+#             return redirect('cart')
+#         else:
+#             messages.info(request, 'This product is not in your cart')
+#             return redirect('product_detail', pk=pk)
+#     else:
+#         messages.info(request, 'You have no order')
+#         return redirect('product_detail', pk=pk)
+
+
 @login_required
 def remove_single_product_from_cart(request, pk):
     product = get_object_or_404(Product, pk=pk)
@@ -276,26 +308,34 @@ def remove_single_product_from_cart(request, pk):
     if order_qs.exists():
         order = order_qs[0]
         if order.products.filter(product__pk=product.pk).exists():
-            order_product = OrderProduct.objects.filter(
+            order_product_qs = OrderProduct.objects.filter(
                 product=product,
                 user=request.user,
                 ordered=False
-            )[0]
+            )
+            if order_product_qs.exists():
+                order_product = order_product_qs[0]
 
-            if order_product.quantity > 1:
-                order_product.quantity -= 1
-                order_product.save()
+                if order_product.quantity > 1:
+                    order_product.quantity -= 1
+                    order_product.save()
+                else:
+                    order.products.remove(order_product)
+                    order_product.delete()
+                messages.info(request, 'Quantity updated.')
+                return redirect('cart')
             else:
-                order.products.remove(order_product)
-                order_product.delete()
-            messages.info(request, 'Quantity updated.')
-            return redirect('cart')
+                messages.info(request, 'This product is not in your cart')
+                return redirect('product_detail', pk=pk)
         else:
             messages.info(request, 'This product is not in your cart')
             return redirect('product_detail', pk=pk)
     else:
         messages.info(request, 'You have no order')
         return redirect('product_detail', pk=pk)
+
+
+
 
 
 @login_required

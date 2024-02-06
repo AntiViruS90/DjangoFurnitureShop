@@ -9,11 +9,12 @@
 
     <main class="form-signin w-100 m-auto">
         <form method="post" class="form-group">
-        {% csrf_token %}
-        {{form|crispy}}
-        <a href="{% url 'password_reset' %}">Forget password</a>
-        <p>Don't have an account? Create one <a href="{% url 'register' %}">here</a></p>
-        <button type="submit" class="btn btn-success btn-md">Login</button>
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+            {% csrf_token %}
+            {{form|crispy}}
+            <a class="btn btn-info mb-2 mt-2" href="{% url 'password_reset' %}"> Forget password</a>
+            <p>Don't have an account? Create one <a href="{% url 'register' %}">here --></a></p>
+            <button type="submit" class="btn btn-success btn-md">Login</button>
         </form>
     </main>
 
