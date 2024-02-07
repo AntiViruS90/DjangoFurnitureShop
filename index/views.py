@@ -417,3 +417,7 @@ def bot_message(self, request):
     else:
         # Если запрос не POST, то просто отображаем страницу заказа
         return render(request, 'index/order_snippet.html')
+
+
+def error_404(request):
+    return render(request, 'index/404.html')

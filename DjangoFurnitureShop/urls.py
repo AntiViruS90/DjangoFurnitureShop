@@ -16,11 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from register import views
+from django.conf.urls import handler404
 
 urlpatterns = [
     path(r'', include('index.urls')),
     path('index/', include('index.urls')),
     path('register/', views.register, name="register"),
     path('admin/', admin.site.urls),
-    path('', include("django.contrib.auth.urls")), 
+    path('', include("django.contrib.auth.urls")),
 ]

@@ -1,11 +1,13 @@
 from django.urls import path, re_path, include
-# from django.conf.urls import url
+from django.conf.urls import handler404
 
 from . import views
 from .views import ProductListView, ProductDetailView, ProductCreateView, ProductUpdateView, ProductDeleteView, \
     CartView, CheckoutView
 from django.conf.urls.static import static
 from django.conf import settings
+
+
 
 urlpatterns = [
     # path('', views.product_list, name='product_list'),
@@ -23,6 +25,7 @@ urlpatterns = [
          name='remove_single_product_from_cart'),
     path('email/', CheckoutView.as_view(), name='email'),
     path('contacts/', views.contacts, name='contacts'),
+    path('404/', views.error_404, name='error_404'),
     # path('<int:id>', views.product_list, name=''),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
