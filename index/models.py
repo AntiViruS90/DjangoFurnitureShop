@@ -84,7 +84,7 @@ class Order(models.Model):
 
 
 class User(models.Model):
-    login = models.CharField(max_length=10)
+    login = models.CharField(max_length=40)
     password = models.CharField(max_length=20)
     name = models.CharField(max_length=30)
     surname = models.CharField(max_length=30)

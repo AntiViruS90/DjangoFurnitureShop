@@ -6,7 +6,6 @@
     <head>
         <link rel="icon" type="image/x-icon" href="{% static 'image/favicon.png' %}">
         <meta charset="utf-8">
-    {#    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">#}
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
@@ -27,7 +26,10 @@
 
                 <ul class="nav nav-pills">
                     <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'contacts' %}">Contacts</a></li>
-                    <li class="nav-item"><a class="nav-link" aria-current="page" href="#">+9 (999) 999-99-99</a></li>
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="#">Phone</a></li>
+                    {% if request.user %}
+                        <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'cabinet' %}">Cabinet</a></li>
+                    {% endif %}
                     {% if user.is_authenticated %}
                         {% if request.user|group_tag:"Customer"  %}
                             <li class="nav-item"><a class="btn btn-outline-primary me-2" href="/cart">Cart</a></li>
@@ -40,40 +42,6 @@
                 </ul>
             </header>
         </div>
-
-
-
-{#        <nav class="navbar navbar-expand-md bg-primary navbar-dark" id="navbar" aria-label="Fourth navbar example">#}
-{#            <div class="container-fluid d-flex justify-content-between">#}
-{#                <a class="navbar-brand" href="/"> Furniture Shop</a>#}
-{#                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"#}
-{#                    data-bs-target="#navbarsExample04" aria-controls="navbarsExample04"#}
-{#                    aria-expanded="true" aria-label="Toggle navigation">#}
-{#                    <span class="navbar-toggler-icon"></span>#}
-{#                </button>#}
-{##}
-{#                <div class="navbar-collapse collapse" id="navbarsExample04">#}
-{#                    <ul class="navbar-nav me-auto mb-2 mb-md-0 text-white">#}
-{#                        {% if user.is_authenticated %}#}
-{#                            {% if request.user|group_tag:"Customer"  %}#}
-{#                                <li class="nav-item"><a class="nav-link" href="/cart">Cart</a></li>#}
-{#                            {% endif %}#}
-{#                        <li class="nav-item"><a class="nav-link" href="/logout/">Log out</a></li>#}
-{#                        {% else %}#}
-{#                            <li class="nav-item"><a class="nav-link" href="/register/">Register</a></li>#}
-{#                            <li class="nav-item"><a class="nav-link" href="/login/">Log in</a></li>#}
-{#                        {% endif %}#}
-{#                        <li class="nav-item ">#}
-{#                            <a class="nav-link active" aria-current="page" href="{% url 'contacts' %}">About us</a>#}
-{#                        </li>#}
-{#                        <li class="nav-item ">#}
-{#                            <a class="nav-link active" aria-current="page" href="#">+9 (999) 999-99-99</a>#}
-{#                        </li>#}
-{#                    </ul>#}
-{#                </div>#}
-{#            </div>#}
-{#        </nav>#}
-
 
         <div class="container mt-0 pt-0" id="alert_div">
             {% if messages %}

@@ -1,0 +1,28 @@
+{% extends 'index/base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load group_tag %}
+{% load static %}
+
+
+{% block content %}
+    <main>
+        <div class="container wow fadeIn">
+            <h2 class="my-5 h2">Personal Cabinet</h2>
+            <div class="col-md-10 mb-4">
+                <div class="card">
+                    <form method="post" class="card-body">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-primary btn-md mt-2">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}
+
+
+
+
+

@@ -335,9 +335,6 @@ def remove_single_product_from_cart(request, pk):
         return redirect('product_detail', pk=pk)
 
 
-
-
-
 @login_required
 def comment(request, id):
     product_comment = get_object_or_404(Product, id=id)  # Product.objects.get(id=id)
@@ -379,6 +376,7 @@ def contacts(request):
 https://api.telegram.org/bot6530095170:AAFod26fN1Aih5d3_jf7-ncF4U0Y1pZYa_g
 """
 
+
 @login_required
 def bot_message(self, request):
     order_products = OrderProduct.objects.filter(user=self.request.user, ordered=False)
@@ -419,5 +417,21 @@ def bot_message(self, request):
         return render(request, 'index/order_snippet.html')
 
 
-def error_404(request):
-    return render(request, 'index/404.html')
+def error_404(request, exception):
+    return render(request, 'index/404.html', status=404)
+
+
+from .forms import UserForm
+
+
+def cabinet(request):
+    user = request.user
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('cabinet')
+    else:
+        form = UserForm(instance=user)
+
+    return render(request, 'index/cabinet.html', {'form': form})

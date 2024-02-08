@@ -30,3 +30,12 @@ class CheckoutForm(forms.Form):
     class Meta:
         model = UserAddress
         fields = ('company_name', 'name', 'surname', 'street', 'house_number', 'house_unit_number', 'post_code', 'city')
+
+
+from .models import User
+
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['login', 'name', 'surname', 'email']

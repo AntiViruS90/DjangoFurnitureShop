@@ -19,7 +19,10 @@ SECRET_KEY = 'd+3hh($sfwvkzy4dn)9=s5g9mdi6zq9wh!$a!cxxw%4c4!@jpy'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+# DEBUG = False     # Server
+# ALLOWED_HOSTS = ['SlavaNikitin.pythonanywhere.com',]      # Server
 
 STATICFILES_DIRS = [(os.path.join(BASE_DIR, "static"))]
 
@@ -122,6 +125,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2.7/howto/static-files/
 
 STATIC_URL = '/static/'
+# MEDIA_URL = '/media/'     # Server
+# STATIC_ROOT = '/home/SlavaNikitin/ServerFurnitureShop/static'     # Server
+# MEDIA_ROOT = '/home/SlavaNikitin/ServerFurnitureShop/media'       # Server
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

@@ -18,6 +18,8 @@ from django.urls import include, path
 from register import views
 from django.conf.urls import handler404
 
+handler404 = 'index.views.error_404'
+
 urlpatterns = [
     path(r'', include('index.urls')),
     path('index/', include('index.urls')),
