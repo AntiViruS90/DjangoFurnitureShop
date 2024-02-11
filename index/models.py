@@ -98,9 +98,9 @@ class UserAddress(models.Model):
     name = models.CharField(max_length=30)
     surname = models.CharField(max_length=30)
     street = models.CharField(max_length=30)
-    house_number = models.CharField(max_length=30)
-    house_unit_number = models.CharField(max_length=30, blank=True, null=True)
-    post_code = models.CharField(max_length=30)
+    house_number = models.CharField(max_length=10)
+    house_unit_number = models.IntegerField(blank=True, null=True)
+    post_code = models.IntegerField()
     city = models.CharField(max_length=30)
 
     def __str__(self):

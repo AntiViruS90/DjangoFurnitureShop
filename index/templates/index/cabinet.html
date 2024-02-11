@@ -8,7 +8,17 @@
 {% block content %}
     <main>
         <div class="container wow fadeIn">
-            <h2 class="my-5 h2">Personal Cabinet</h2>
+            <div class="col-md-8 col-lg-6">
+                <h1 class="h1 my-5">Personal Cabinet</h1>
+                <h2 class="my-3 h2">Hello {{ user_data.first_name }}</h2>
+                <table class="table table-striped">
+                    <tr><td>Login:</td><td>{{ user_data.username }}</td></tr>
+                    <tr><td>Name: </td><td>{{ user_data.first_name }}</td></tr>
+                    <tr><td>Surname: </td><td>{{ user_data.last_name}}</td></tr>
+                    <tr><td>Email:</td><td>{{ user_data.email}}</td></tr>
+                </table>
+            </div>
+            <h2 class="my-5 h2">Change User Details:</h2>
             <div class="col-md-10 mb-4">
                 <div class="card">
                     <form method="post" class="card-body">

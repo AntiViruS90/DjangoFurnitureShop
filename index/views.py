@@ -6,12 +6,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.utils import timezone
-from django.contrib.auth.models import User
 from .models import Product, Comment, Order, OrderProduct, UserAddress
-from .forms import ProductForm, CommentForm, CheckoutForm
+from .forms import CommentForm, CheckoutForm
 from django.core.mail import EmailMessage
 from . import generate_invoice
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
+import telebot as telebot
+
+bot = telebot.TeleBot('6530095170:AAFod26fN1Aih5d3_jf7-ncF4U0Y1pZYa_g')
 
 
 class ProductListView(ListView):
@@ -149,18 +151,28 @@ class CheckoutView(LoginRequiredMixin, View):
                 order.ordered = True
                 order.payment_deadline = payment_deadline
                 # print(f"{order.get_total()}")
-                email = EmailMessage('Order confirmation',
-                                     f''' This is an automatically generated message.
+                email = EmailMessage(
+                    'Order confirmation',
+                    f''' This is an automatically generated message.
                     DO NOT REPLY TO THE MESSAGE YOU RECEIVED.
 
                     Thank you for your order.
                     The order value is: $ {order.get_total()}.
                     The order must be paid by: {payment_deadline}
                     Otherwise, the order will be canceled.
-                    ''', 'slava-nikitin-1990@mail.ru', [str(self.request.user.email)])
+                    ''', 'slava90nikitin90@gmail.com', [str(self.request.user.email)])
                 email.attach_file('Proforma.pdf')
                 email.send()
                 order.save()
+                # telegram bot
+                chat_id = 682235838
+                message = 'Name: ' + name + '\nSurname: ' + surname + "\nCity: " + city + \
+                          '\nStreet: ' + street + '\nHouse number: ' + house_number
+                items_list = str(items_list)
+                print(items_list)
+                answer = items_list + '\n' + message
+                bot.send_message(chat_id, answer)
+
                 return render(self.request, "index/order_complete.html", {})
             else:
                 print(form.errors)
@@ -172,44 +184,6 @@ class CheckoutView(LoginRequiredMixin, View):
             messages.warning(
                 self.request, "You do not have any active order")
             return redirect("cart")
-
-    # def bot_message(self, request):
-    #     order_products = OrderProduct.objects.filter(user=self.request.user, ordered=False)
-    #     form = CheckoutForm(data=self.request.POST)
-    #     if request.POST:
-    #         if form.is_valid():
-    #             name = form.cleaned_data.get('name')
-    #             surname = form.cleaned_data.get('surname')
-    #             city = form.cleaned_data.get('city')
-    #             street = form.cleaned_data.get('street')
-    #             house_number = form.cleaned_data.get('house_number')
-    #             # items = Cart.objects.filter(user_id=request.user.id)
-    #             order = ''
-    #             for one in order_products:
-    #                 order += one.product.desription + ' ' + str(one.count) + 'шт. ' + str(one.total) + 'руб. ' + '\n'
-    #             total = 0
-    #             print(order)
-    #             # for i in items:
-    #             #     total += i.total
-    #             # OrderCart.objects.create(address=address, name=name, tel=tel, total=total, order=order)
-    #             # items.delete()
-    #             ##########################################################################################
-    #             token = '6530095170:AAFod26fN1Aih5d3_jf7-ncF4U0Y1pZYa_g'
-    #             chat_id = 682235838  # 682235838
-    #             message = order + '\nName: ' + name + '\nSurname: ' + surname + "\nCity: " + city + \
-    #                       '\nStreet: ' + street + '\nHouse number: ' + house_number
-    #             url = f'https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={message}'
-    #
-    #             print(order)
-    #             print(request)
-    #             # print(requests.get(url).json())
-    #             # return redirect('home')
-    #             #     return HttpResponse('Data successfully')  # Вариант 1
-    #             return JsonResponse({'message': 'Data successfully', 'link': '../'})
-    #
-    #     else:
-    #         # Если запрос не POST, то просто отображаем страницу заказа
-    #         return render(request, 'index/order_snippet.html')
 
 
 @login_required
@@ -264,38 +238,6 @@ def remove_from_cart(request, pk):
     else:
         messages.info(request, 'Cart is empty')
         return redirect('product_detail', pk=pk)
-
-
-# @login_required
-# def remove_single_product_from_cart(request, pk):   #
-#     product = get_object_or_404(Product, pk=pk)     #
-#     order_qs = Order.objects.filter(        #
-#         user=request.user,      #
-#         ordered=False       #
-#     )
-#     if order_qs.exists():   #
-#         order = order_qs[0] #
-#         if order.products.filter(product__pk=product.pk).exists():  #
-#             order_product = OrderProduct.objects.filter(    #   order_product_qs
-#                 product=product,    #
-#                 user=request.user,  #
-#                 ordered=False       #
-#             )[0]        #
-#
-#             if order_product.quantity > 1:
-#                 order_product.quantity -= 1
-#                 order_product.save()
-#             else:
-#                 order.products.remove(order_product)
-#                 order_product.delete()
-#             messages.info(request, 'Quantity updated.')
-#             return redirect('cart')
-#         else:
-#             messages.info(request, 'This product is not in your cart')
-#             return redirect('product_detail', pk=pk)
-#     else:
-#         messages.info(request, 'You have no order')
-#         return redirect('product_detail', pk=pk)
 
 
 @login_required
@@ -372,51 +314,6 @@ def contacts(request):
     return render(request, 'index/contacts.html')
 
 
-"""
-https://api.telegram.org/bot6530095170:AAFod26fN1Aih5d3_jf7-ncF4U0Y1pZYa_g
-"""
-
-
-@login_required
-def bot_message(self, request):
-    order_products = OrderProduct.objects.filter(user=self.request.user, ordered=False)
-    form = CheckoutForm(data=self.request.POST)
-    if request.POST:
-        if form.is_valid():
-            name = form.cleaned_data.get('name')
-            surname = form.cleaned_data.get('surname')
-            city = form.cleaned_data.get('city')
-            street = form.cleaned_data.get('street')
-            house_number = form.cleaned_data.get('house_number')
-            # items = Cart.objects.filter(user_id=request.user.id)
-            order = ''
-            for one in order_products:
-                order += one.product.desription + ' ' + str(one.count) + 'шт. ' + str(one.total) + 'руб. ' + '\n'
-            total = 0
-            print(order)
-            # for i in items:
-            #     total += i.total
-            # OrderCart.objects.create(address=address, name=name, tel=tel, total=total, order=order)
-            # items.delete()
-            ##########################################################################################
-            token = '6530095170:AAFod26fN1Aih5d3_jf7-ncF4U0Y1pZYa_g'
-            chat_id = 682235838  # 682235838
-            message = order + '\nName: ' + name + '\nSurname: ' + surname + "\nCity: " + city + \
-                      '\nStreet: ' + street + '\nHouse number: ' + house_number
-            url = f'https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={message}'
-
-            print(order)
-            print(request)
-            # print(requests.get(url).json())
-            # return redirect('home')
-            #     return HttpResponse('Data successfully')  # Вариант 1
-            return JsonResponse({'message': 'Data successfully', 'link': '../'})
-
-    else:
-        # Если запрос не POST, то просто отображаем страницу заказа
-        return render(request, 'index/order_snippet.html')
-
-
 def error_404(request, exception):
     return render(request, 'index/404.html', status=404)
 
@@ -433,5 +330,10 @@ def cabinet(request):
             return redirect('cabinet')
     else:
         form = UserForm(instance=user)
-
-    return render(request, 'index/cabinet.html', {'form': form})
+        user_data = {
+            'username': user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email,
+        }
+    return render(request, 'index/cabinet.html', {'form': form, 'user_data': user_data})

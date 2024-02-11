@@ -1,5 +1,7 @@
 {% extends 'index/base.html' %}
 {% load group_tag %}
+{% load group_tag %}
+{% load static %}
 
 
 {% block content %}
@@ -7,6 +9,11 @@
         <form action="" method="post" class="product-form">
             {% csrf_token %}
             <h2>Order has been placed</h2>
+            <button class="btn btn-info btn-sm mt-2">
+                <a class="text-decoration-none" href="/">
+                    <img src="{% static 'image/chevron-left.png' %}" alt="Main page" width="16px" style="margin-top: -3px">Main page
+                </a>
+            </button>
         </form>
     {% else %}
         <h2>You don't have access here</h2>

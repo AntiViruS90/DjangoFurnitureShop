@@ -24,20 +24,22 @@
                    class="fs-4 d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">Furniture Shop
                 </a>
 
-                <ul class="nav nav-pills">
+                <ul class="nav nav-pills d-flex flex-wrap justify-content-center align-content-center">
                     <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'contacts' %}">Contacts</a></li>
                     <li class="nav-item"><a class="nav-link" aria-current="page" href="#">Phone</a></li>
-                    {% if request.user %}
+                    {% if user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'cabinet' %}">Cabinet</a></li>
                     {% endif %}
                     {% if user.is_authenticated %}
                         {% if request.user|group_tag:"Customer"  %}
+                        <div class="d-flex flex-row">
                             <li class="nav-item"><a class="btn btn-outline-primary me-2" href="/cart">Cart</a></li>
                         {% endif %}
-                        <li class="nav-item"><a class="btn btn-outline-danger me-2" href="/logout/">Log out</a></li>
+                            <li class="nav-item"><a class="btn btn-outline-danger me-2" href="/logout/">Log out</a></li>
                     {% else %}
-                        <li class="nav-item"><a class="btn btn-outline-primary me-2" href="/login/">Login</a></li>
-                        <li class="nav-item"><a class="btn btn-primary" href="/register/">Register</a></li>
+                            <li class="nav-item"><a class="btn btn-outline-primary me-2" href="/login/">Login</a></li>
+                            <li class="nav-item"><a class="btn btn-primary" href="/register/">Register</a></li>
+                        </div>
                     {% endif %}
                 </ul>
             </header>

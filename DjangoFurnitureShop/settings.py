@@ -19,7 +19,7 @@ SECRET_KEY = 'd+3hh($sfwvkzy4dn)9=s5g9mdi6zq9wh!$a!cxxw%4c4!@jpy'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 # DEBUG = False     # Server
 # ALLOWED_HOSTS = ['SlavaNikitin.pythonanywhere.com',]      # Server
@@ -138,10 +138,41 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+################# Mail.ru ###################
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# EMAIL_HOST = 'smtp.mail.ru'
+# EMAIL_HOST_USER = 'slava-nikitin-1990@mail.ru'
+# EMAIL_HOST_PASSWORD = 'XfrCRSqDrC2VfgpyiZUc'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+
+# EMAIL_SERVER = EMAIL_HOST_USER
+# EMAIL_ADMIN = EMAIL_HOST_USER
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+################# Yandex.ru ###################
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.yandex.ru'
+# EMAIL_PORT = 587    # EMAIL_USE_SSL = True  EMAIL_PORT = 465
+# EMAIL_USE_TLS = True
+
+# EMAIL_HOST_USER = 'AntiViruS2290@yandex.ru'
+# EMAIL_HOST_PASSWORD = 'cznapkcwkpqvqtyx'
+
+# EMAIL_SERVER = EMAIL_HOST_USER
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# EMAIL_ADMIN = EMAIL_HOST_USER
+
+################# Gmail.com ###################
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = 'slava-nikitin-1990@mail.ru'
-EMAIL_HOST = 'smtp.mail.ru'
-EMAIL_HOST_USER = 'slava-nikitin-1990@mail.ru'
-EMAIL_HOST_PASSWORD = 'zz7FH4urdse1Sf4PdW0c'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "slava90nikitin90@gmail.com"
+EMAIL_HOST_PASSWORD = 'qzyd pnia lqbz xdtv'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+EMAIL_SERVER = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = EMAIL_HOST_USER

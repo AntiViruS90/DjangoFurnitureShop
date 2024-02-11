@@ -32,6 +32,7 @@ class CheckoutForm(forms.Form):
         fields = ('company_name', 'name', 'surname', 'street', 'house_number', 'house_unit_number', 'post_code', 'city')
 
 
+
 from .models import User
 
 

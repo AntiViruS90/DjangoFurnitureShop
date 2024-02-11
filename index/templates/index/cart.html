@@ -5,12 +5,12 @@
 {% block content %}
     <main>
         <div class="container">
-            <div class="table-responsive text-nowrap">
+            <div class="">
                 <h2>Order summary</h2>
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col">Product name</th>
+                            <th>Product name</th>
                             <th scope="col">Price</th>
                             <th scope="col">Quantity</th>
                             <th scope="col">Amount</th>
@@ -49,12 +49,12 @@
                         {% if order.get_total %}
                             <tr>
                                 <td colspan="3"><b>Total price</b></td>
-                                <td><b>$ {{ order.get_total }}</b></td>
+                                <td colspan="2"><b>$ {{ order.get_total }}</b></td>
                             </tr>
                             <tr>
                                 <td colspan="5">
                                     <a href="/checkout/" class="btn btn-warning float-end ml-2">Buy now</a>
-                                    <a href="/" class="btn btn-primary float-end">Continue shopping</a>
+                                    <a href="/" class="btn btn-primary float-start">Continue shopping</a>
                                 </td>
                             </tr>
                         {% endif %}
