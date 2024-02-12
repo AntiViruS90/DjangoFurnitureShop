@@ -48,10 +48,10 @@
         <div class="container mt-0 pt-0" id="alert_div">
             {% if messages %}
                 {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    <div class="alert alert-{{ message.tags }}" role="alert" id="alert">
                         {{ message }}
-                        <button id="btn-close" type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button id="btn-close" class="btn btn-sm btn-outline-danger" data-dismiss="alert" aria-label="Close">
+                            <img src="{% static 'image/close.png' %}" alt="Close" width="25px">
                         </button>
                     </div>
                 {% endfor %}
