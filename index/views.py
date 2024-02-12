@@ -13,6 +13,7 @@ from . import generate_invoice
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 import telebot as telebot
 
+
 bot = telebot.TeleBot('6530095170:AAFod26fN1Aih5d3_jf7-ncF4U0Y1pZYa_g')
 
 

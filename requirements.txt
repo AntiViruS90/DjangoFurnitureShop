@@ -15,10 +15,9 @@ requests~=2.31.0
 qrcode~=7.4.2
 qrplatba~=1.1.1
 reportlab~=4.0.7
-django-crispy-forms~=1.14.0
+django-crispy-forms~=2.1
 InvoiceGenerator~=1.1.0
 django-bootstrap4~=23.2
 crispy-bootstrap4~=2023.1
 django-multiupload~=0.6.1
-
 telebot~=0.0.5
