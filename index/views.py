@@ -7,12 +7,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.utils import timezone
 from .models import Product, Comment, Order, OrderProduct, UserAddress
-from .forms import CommentForm, CheckoutForm
+from .forms import CommentForm, CheckoutForm, UserForm
 from django.core.mail import EmailMessage
 from . import generate_invoice
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 import telebot as telebot
-
 
 bot = telebot.TeleBot('6530095170:AAFod26fN1Aih5d3_jf7-ncF4U0Y1pZYa_g')
 
@@ -319,9 +318,8 @@ def error_404(request, exception):
     return render(request, 'index/404.html', status=404)
 
 
-from .forms import UserForm
 
-
+@login_required
 def cabinet(request):
     user = request.user
     if request.method == 'POST':
@@ -338,3 +336,4 @@ def cabinet(request):
             'email': user.email,
         }
     return render(request, 'index/cabinet.html', {'form': form, 'user_data': user_data})
+

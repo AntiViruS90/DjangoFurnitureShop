@@ -32,11 +32,10 @@ class CheckoutForm(forms.Form):
         fields = ('company_name', 'name', 'surname', 'street', 'house_number', 'house_unit_number', 'post_code', 'city')
 
 
-
-from .models import User
+from django.contrib.auth.models import User
 
 
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['login', 'name', 'surname', 'email']
+        fields = ['username', 'first_name', 'last_name', 'email']
