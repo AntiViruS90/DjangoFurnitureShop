@@ -318,6 +318,9 @@ def error_404(request, exception):
     return render(request, 'index/404.html', status=404)
 
 
+def FAQs(request):
+    return render(request, 'index/FAQs.html')
+
 
 @login_required
 def cabinet(request):

@@ -1,0 +1,57 @@
+{% extends 'index/base.html' %}
+
+{% block content %}
+    <h2 class="h2">FAQs</h2>
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#"
+               data-bs-toggle="dropdown" aria-expanded="false">What are the delivery times for furniture?</a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-item">Typically, the delivery time for furniture is between 2 to 4 weeks
+                  depending on product availability and your location.</li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#"
+               data-bs-toggle="dropdown" aria-expanded="false">How does the furniture assembly process work?</a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-item">Furniture may be delivered fully assembled or as a self-assembly kit.
+                  All necessary instructions and tools are usually included.</li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#"
+               data-bs-toggle="dropdown" aria-expanded="false">Can I return or exchange furniture if it doesn't fit?</a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-item">Yes, we accept furniture returns or exchanges within a certain period of time
+                  (usually 14 or 30 days) from the purchase date, subject to specific conditions. See our page
+                  <a class="text-decoration-none" href="{% url 'contacts' %}">Contacts</a></li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#"
+               data-bs-toggle="dropdown" aria-expanded="false">How to choose the right size of furniture for a particular room?</a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-item">It is recommended to measure the room where the furniture will be placed and
+                  consider the available space to choose the appropriate size of furniture.</li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#"
+               data-bs-toggle="dropdown" aria-expanded="false">How to care for furniture to ensure its longevity?</a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-item">Regular cleaning and the use of specific care products for different materials
+                  will help maintain the furniture in good condition.</li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#"
+               data-bs-toggle="dropdown" aria-expanded="false">Do you offer warranties on furniture?</a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-item">Yes, we typically provide manufacturer warranties for furniture for a certain
+                  period of time. Warranty terms may vary depending on the product. Check our
+                  <a class="text-decoration-none" href="{% url 'contacts' %}">page</a></li>
+            </ul>
+        </li>
+    </ul>
+{% endblock content %}

@@ -22,6 +22,7 @@ urlpatterns = [
     path('email/', CheckoutView.as_view(), name='email'),
     path('contacts/', views.contacts, name='contacts'),
     path('cabinet/', views.cabinet, name='cabinet'),
+    path('FAQs/', views.FAQs, name='FAQs'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
