@@ -21,7 +21,7 @@
         <div class="container">
             <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
                 <a href="/" style="color: rgb(13 110 253)"
-                   class="fs-4 d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">Furniture Shop
+                   class="fs-4 d-flex align-items-center mb-sm-1 mb-1 mb-md-0 me-md-auto text-decoration-none">Furniture Shop
                 </a>
 
                 <ul class="nav nav-pills d-flex flex-wrap justify-content-center align-content-center">
@@ -57,13 +57,11 @@
                 {% endfor %}
             {% endif %}
         </div>
-        <div class="content container justify-content-left">
-            <div class="row">
-                <div class="col-sm-12 col-md-9 col-lg-9">
-                    {% block content %}
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                {% block content %}
 
-                    {% endblock %}
-                </div>
+                {% endblock %}
             </div>
         </div>
 
@@ -76,7 +74,7 @@
                                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Subscribe to Our Newsletter</h2>
                                 <div class="d-flex flex-row align-items-center justify-content-center mb-2">
                                     <input placeholder="Enter your email address" class="bg-light text-gray-800 border-0 p-1" type="email">
-                                    <button class="btn btn-primary btn-sm" type="submit" id="btn_subscribe">Subscribe</button>
+                                    <button class="btn btn-primary btn-sm" type="button" id="btn_subscribe">Subscribe</button>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +86,7 @@
                     <li class="nav-item"><a href="{% url 'FAQs' %}" class="nav-link">FAQs</a></li>
                     <li class="nav-item"><a href="{% url 'cabinet' %}" class="nav-link">Cabinet</a></li>
                 </ul>
-                <ul class="nav d-flex flex-row col-md-8 justify-content-start">
+                <ul class="nav justify-content-center">
                     <li class="nav-item">
                         <span class="nav-link">&copy; 2023 Furniture Shop</span>
                     </li>

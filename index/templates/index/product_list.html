@@ -2,20 +2,33 @@
 {% load group_tag %}
 
 {% block content %}
-    <form class="form-inline ml-4 my-2 my-lg-1 mt-2">
-        <div class="form-group d-flex">
-            <input type="search" class="form-control me-sm-2 mb-2 mt-2" placeholder="Search Product" aria-label="Search"
-                name="search" value="{{ search_phrase }}">
-            <button type="submit" class="btn btn-primary mb-2 mt-2">Search</button>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <form class="ml-4 my-2 mt-2">
+                    <div class="form-group d-flex">
+                        <input type="search" class="form-control me-sm-2 mb-2 mt-2" placeholder="Search Product" aria-label="Search"
+                            name="search" value="{{ search_phrase }}">
+                        <button type="submit" class="btn btn-primary mb-2 mt-2">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6">
+                <form class="ml-4 my-2 mt-2">
+                    <div class="form-group d-flex">
+                        <input type="search" class="form-control me-sm-2 mb-2 mt-2" placeholder="Search Manufacturer" aria-label="Search"
+                            name="search_manufacturer" value="{{ search_manufacturer }}">
+                        <button type="submit" class="btn btn-primary mb-2 mt-2">Search</button>
+                    </div>
+                </form>
+            </div>
+
+
         </div>
-    </form>
-    <form class="form-inline ml-4 my-2 my-lg-1 mt-2">
-        <div class="form-group d-flex">
-            <input type="search" class="form-control me-sm-2 mb-2 mt-2" placeholder="Search Manufacturer" aria-label="Search"
-                name="search_manufacturer" value="{{ search_manufacturer }}">
-            <button type="submit" class="btn btn-primary mb-2 mt-2">Search</button>
-        </div>
-    </form>
+
+
+    </div>
+
     <hr class="mt-0 mb-2">
     {% if request.user|group_tag:"Provider" %}
         <a href="{% url 'new_product' %}" class="btn btn-success mb-2">Add Product</a>
@@ -23,21 +36,21 @@
     {% endif %}
     <div class="row row-cols-1 row-cols-md-1 row-cols-lg-2 mb-3 text-center">
         {% for product in product_list %}
-            <div class="col">
-                <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="col p-lg-2 p-0">
+                <div class="card mb-4 rounded-3 shadow-lg shadow-sm">
                     <div class="card-header py-3">
                         <h4 class="my-0 fw-normal">
                             <a class="text-decoration-none" href="{% url 'product_detail' pk=product.pk %}">{{ product.name }}</a>
                         </h4>
                     </div>
                     <div class="card-body">
-                        <div class="">
+
                             {% if product.photo %}
                                 <a href="{% url 'product_detail' pk=product.pk %}">
                                     <img src="{{ product.photo.url }}" alt="{{ product.name }}" width="100%" height="auto">
                                 </a>
                             {% endif %}
-                        </div>
+
                         <ul class="list-unstyled mt-3 mb-4">
                             <li><h4>Manufacturer: {{ product.manufacturer }}</h4></li>
                             <li class="date"><h5>{{ product.created_date }}</h5></li>

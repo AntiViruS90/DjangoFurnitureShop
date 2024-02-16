@@ -18,7 +18,6 @@ SECRET_KEY = 'd+3hh($sfwvkzy4dn)9=s5g9mdi6zq9wh!$a!cxxw%4c4!@jpy'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = []
 
 # DEBUG = False     # Server

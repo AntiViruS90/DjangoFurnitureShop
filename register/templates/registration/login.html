@@ -2,12 +2,25 @@
 {% load crispy_forms_tags %}
 {% load crispy_forms_filters %}
 
-{% block title %}Login Here{% endblock %}
-
-
-{% block content %}
-
-    <main class="form-signin w-100 m-auto">
+{#{% block title %}Login Here{% endblock %}#}
+{##}
+{##}
+{#{% block content %}#}
+{##}
+{#    #}
+{##}
+{#{% endblock %}#}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login Here</title>
+</head>
+    <body>
+        <main class="form-signin w-100 m-auto">
         <form method="post" class="form-group">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
             {% csrf_token %}
@@ -17,6 +30,6 @@
             <a class="btn btn-warning" href="{% url 'password_reset' %}">Forget password</a>
         </form>
     </main>
-
-{% endblock %}
+    </body>
+</html>
 
