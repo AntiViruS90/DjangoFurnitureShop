@@ -26,3 +26,6 @@
 #hint_id_password2 {
     font-size: .875em;
 }
+.text_description {
+    text-align: justify;
+}

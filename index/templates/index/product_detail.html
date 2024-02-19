@@ -32,9 +32,12 @@
                 </button>
             </div>
         </div>
-        <p>{{ product.description|linebreaksbr }}</p>
-        <p><b>$ {{ product.price|linebreaksbr }}</b></p>
-        <hr class="mb-2">
+        <div class="col-lg-6 col-md-8">
+            <p class="text_description">{{ product.description|linebreaksbr }}</p>
+            <p><b>$ {{ product.price|linebreaksbr }}</b></p>
+            <hr class="mb-2">
+        </div>
+
     </div>
     <div>
         {% if request.user|group_tag:"Provider" %}
