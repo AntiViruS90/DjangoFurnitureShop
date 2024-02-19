@@ -35,7 +35,7 @@ class Product(models.Model):
 
 
 class Attachment(models.Model):
-    product = models.ForeignKey(Product, verbose_name=_('Product'), on_delete=models.PROTECT)
+    product = models.ForeignKey(Product, verbose_name=_('Product'), on_delete=models.CASCADE)
     additional_photos = models.FileField(_('Additional Photos'), upload_to='media/additional_photos')
 
 
