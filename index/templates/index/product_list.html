@@ -61,27 +61,29 @@
         {% endfor %}
     </div>
 
+    <div class="container">
+        <nav aria-label="Page navigation" class="pagination table-responsive mb-2">
+            <ul class="pagination pagination-sm flex-sm-wrap">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?{{ request.GET.urlencode }}&page=1"><< </a></li>
+                    <li class="page-item"><a class="page-link" href="?{{ request.GET.urlencode }}&page={{ page_obj.previous_page_number }}">< </a></li>
+                {% endif %}
+                {% for i in page_obj.paginator.page_range %}
+                    <li class="page-item"><a class="page-link" href="?{{ request.GET.urlencode }}&page={{ i }}">{{ i }}</a></li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}"> ></a></li>
+                    <li class="page-item"><a class="page-link" href="?{{ request.GET.urlencode }}&page={{ page_obj.paginator.num_pages }}"> >></a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        <span class="current">
+            {% if page_obj.num_pages != None %}
+            {% else %}
+                Page {{ page_obj.number}} of {{ page_obj.paginator.num_pages }}
+            {% endif %}
+        </span>
+    </div>
 
-    <nav aria-label="Page navigation" class="pagination table-responsive mb-2">
-        <ul class="pagination pagination-sm flex-sm-wrap">
-            {% if page_obj.has_previous %}
-                <li class="page-item"><a class="page-link" href="?{{ request.GET.urlencode }}&page=1"><< </a></li>
-                <li class="page-item"><a class="page-link" href="?{{ request.GET.urlencode }}&page={{ page_obj.previous_page_number }}">< </a></li>
-            {% endif %}
-            {% for i in page_obj.paginator.page_range %}
-                <li class="page-item"><a class="page-link" href="?{{ request.GET.urlencode }}&page={{ i }}">{{ i }}</a></li>
-            {% endfor %}
-            {% if page_obj.has_next %}
-                <li class="page-item"><a class="page-link" href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}"> ></a></li>
-                <li class="page-item"><a class="page-link" href="?{{ request.GET.urlencode }}&page={{ page_obj.paginator.num_pages }}"> >></a></li>
-            {% endif %}
-        </ul>
-    </nav>
-    <span class="current">
-        {% if page_obj.num_pages != None %}
-        {% else %}
-            Page {{ page_obj.number}} of {{ page_obj.paginator.num_pages }}
-        {% endif %}
-    </span>
 {% endblock content %}
 

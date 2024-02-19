@@ -11,6 +11,7 @@ from .forms import CommentForm, CheckoutForm, UserForm, ProductForm
 from django.core.mail import EmailMessage
 from . import generate_invoice
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
+from django.contrib.auth.models import Group
 import telebot as telebot
 
 bot = telebot.TeleBot('6530095170:AAFod26fN1Aih5d3_jf7-ncF4U0Y1pZYa_g')
@@ -88,6 +89,28 @@ class CartView(LoginRequiredMixin, View):
         except ObjectDoesNotExist:
             messages.warning(self.request, "You don't have an active order!")
             return redirect("/")
+
+
+def send_order_notification_to_manufacturer(order):
+    manufacturer_group = Group.objects.get(name='Provider')
+    manufacturers = manufacturer_group.user_set.all()
+
+    products_ordered = order.products.all()
+
+    for manufacturer in manufacturers:
+        product_info = []
+        for product in products_ordered:
+            product_info.append(f'{product.product.name} - Quantity: {product.quantity}')
+
+        email = EmailMessage(
+            'New Order Notification',
+            f'A new order has been placed with the following products:\n{", ".join(product_info)}\n\n'
+            f'Total number of products: {sum(product.quantity for product in products_ordered)}\n'
+            f'Shipping Address: {order.shipping_address.city, order.shipping_address.name, order.shipping_address.surname}\n',
+            'slava90nikitin90@gmail.com',
+            [manufacturer.email]
+        )
+        email.send()
 
 
 class CheckoutView(LoginRequiredMixin, View):
@@ -177,6 +200,7 @@ class CheckoutView(LoginRequiredMixin, View):
                 email.attach_file('Proforma.pdf')
                 email.send()
                 order.save()
+
                 # telegram bot
                 chat_id = 682235838
                 message = 'Name: ' + name + '\nSurname: ' + surname + "\nCity: " + city + \
@@ -185,6 +209,8 @@ class CheckoutView(LoginRequiredMixin, View):
                 print(items_list)
                 answer = items_list + '\n' + message
                 bot.send_message(chat_id, answer)
+
+                send_order_notification_to_manufacturer(order)
 
                 return render(self.request, "index/order_complete.html", {})
             else:

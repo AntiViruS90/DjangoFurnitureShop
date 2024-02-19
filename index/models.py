@@ -3,6 +3,7 @@ from django.db import models
 from django.shortcuts import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import AbstractUser, Group, Permission
 
 
 class Product(models.Model):
@@ -111,3 +112,23 @@ class UserAddress(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class CustomUser(AbstractUser):
+    is_customer = models.BooleanField(default=True)
+
+    groups = models.ManyToManyField(
+        Group,
+        verbose_name='groups',
+        blank=True,
+        related_name='custom_user_groups'
+    )
+    user_permissions = models.ManyToManyField(
+        Permission,
+        verbose_name='user permissions',
+        blank=True,
+        related_name='custom_user_permissions'
+    )
+
+    def __str__(self):
+        return self.username
