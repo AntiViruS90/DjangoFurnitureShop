@@ -27,7 +27,7 @@
     {% for product in product_list %}
         <article class="embed-responsive">
             <div class="product">
-                <ul class="row">
+                <div class="row">
                     <div class="me-4">
                         {% if product.photo %}
                             <img src="{{ product.photo.url }}" alt="" width="150" height="150">
@@ -39,7 +39,7 @@
                         <h6><div class="date">{{ product.created_date }}</div></h6>
                         <p><b>$ {{ product.price|linebreaksbr }}</b></p>
                     </div>
-                </ul>
+                </div>
             </div>
         </article>
     {% endfor %}

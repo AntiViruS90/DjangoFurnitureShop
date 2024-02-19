@@ -13,22 +13,3 @@
         <h1>You don't have access here!</h1>
     {% endif %}
 {% endblock content %}
-
-{#{% extends 'index/base.html' %}#}
-{#{% load group_tag %}#}
-{##}
-{##}
-{#{% block content %}#}
-{#    {% if request.user|group_tag:"Provider" %}#}
-{#    #}
-{#    <form method="POST" class="product-form">#}
-{#        {% csrf_token %}#}
-{#        <h2>Czy napewno chcesz usunąć produkt o nazwie : "{{product.name}}"?</h2>#}
-{#        <button type="submit" name="Tak" href="/" class="btn btn-danger btn-md my-0 p">Tak</button>#}
-{#        <a class="btn btn-primary btn-md ml-2 my-0 p" href="{% url 'product_list' %}">Nie</a>#}
-{#    </form>#}
-{#    #}
-{#    {% else %}#}
-{#    <h1>Nie masz tutaj dostępu!</h1>#}
-{#    {% endif %}#}
-{#{% endblock %}#}

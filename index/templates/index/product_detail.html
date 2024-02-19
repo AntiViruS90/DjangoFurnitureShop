@@ -1,21 +1,42 @@
 {% extends 'index/base.html' %}
 {% load crispy_forms_filters %}
-{#{% load static %}#}
 {% load group_tag %}
+{% load static %}
 
 {% block content %}
     <ul class="user"></ul>
-    <div class="product">
-        <h1>{{ product.name }}</h1>
-        <h4>{{ product.manufacturer }}</h4>
-        <h6><div>{{ product.created_date }}</div></h6>
-        {% if product.photo %}
-            <img src="{{ product.photo.url }}" alt="" class="img-fluid">
+    <div class="product container">
+        <h1 class="h1">{{ product.name }}</h1>
+        <h4 class="h4">{{ product.manufacturer }}</h4>
+        <h6 class="h6">{{ product.created_date }}</h6>
+        {% if product.attachment_set.all %}
+        <div class="col-lg-6 col-md-8 col-12">
+            <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for photo in product.attachment_set.all %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <img class="d-block w-100" src="{{ photo.additional_photos.url }}" alt="{{ product.name }}">
+                        </div>
+                    {% endfor %}
+        {% else %}
+            <p>No additional photos available.</p>
         {% endif %}
-
-
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                    <img src="{% static 'image/left.png' %}" alt="Left" width="40px">
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                    <img src="{% static 'image/right.png' %}" alt="Right" width="40px">
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
         <p>{{ product.description|linebreaksbr }}</p>
         <p><b>$ {{ product.price|linebreaksbr }}</b></p>
+        <hr class="mb-2">
+    </div>
+    <div>
         {% if request.user|group_tag:"Provider" %}
             <a href="{% url 'new_product' %}" class="btn btn-success btn-md my-0 mb-2 p">New</a>
             {% if user == product.manufacturer %}
@@ -24,23 +45,8 @@
             {% endif %}
         {% endif %}
         {% if request.user|group_tag:"Customer" %}
-            <!-- Добавление комментария -->
-{#            <form method="POST" action="">  <!-- {% url 'comment' id=product.id %} -->#}
-{#              {% csrf_token %}#}
-{#                {{ form_comment|crispy }}#}
-{#              <button type="submit">Добавить комментарий</button>#}
-{#            </form>#}
-
-            <!-- Отображение списка комментариев -->
-{#            {% for comment in comments_all %}#}
-{#              <div>{{ comment.author }}: {{ comment.text }}</div>#}
-{#            {% empty %}#}
-{#              <p>Комментариев пока нет.</p>#}
-{#            {% endfor %}#}
             <a href="{% url 'add_to_cart' pk=product.pk %}" class="btn btn-primary btn-md my-0 mb-2 p">Add to cart</a>
             <a href="{% url 'remove_from_cart' pk=product.pk %}" class="btn btn-danger btn-md mb-2 my-0 p">Remove from cart</a>
         {% endif %}
     </div>
 {% endblock content %}
-
-

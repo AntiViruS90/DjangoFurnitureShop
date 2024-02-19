@@ -15,25 +15,3 @@
         <h1>You don't have access here</h1>
     {% endif %}
 {% endblock content %}
-
-{#{% extends 'index/base.html' %}#}
-{#{% load crispy_forms_tags %}#}
-{#{% load group_tag %}#}
-{##}
-{#{% block title %}#}
-{#Create New Product#}
-{#{% endblock %}#}
-{##}
-{#{% block content %}#}
-{#    {% if request.user|group_tag:"Provider"  %}#}
-{#    <h1>Nowy produkt</h1>#}
-{#    <form method="POST" class="product-form" enctype="multipart/form-data">#}
-{#        {% csrf_token %}#}
-{#        {{ form|crispy }}#}
-{#        <button type="submit" name="save" class="btn btn-primary btn-md my-0 p">Zapisz</button>#}
-{#    </form>#}
-{#    {% else %}#}
-{#    <h1>Nie masz tutaj dostępu!</h1>#}
-{#    {% endif %}#}
-{#    #}
-{#{% endblock %}#}

@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 
 class Product(models.Model):
@@ -31,6 +32,11 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('product_detail', kwargs={'pk': self.pk})
+
+
+class Attachment(models.Model):
+    product = models.ForeignKey(Product, verbose_name=_('Product'), on_delete=models.PROTECT)
+    additional_photos = models.FileField(_('Additional Photos'), upload_to='media/additional_photos')
 
 
 class Comment(models.Model):

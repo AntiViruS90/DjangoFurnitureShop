@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.utils import timezone
 from .models import Product, Comment, Order, OrderProduct, UserAddress
-from .forms import CommentForm, CheckoutForm, UserForm
+from .forms import CommentForm, CheckoutForm, UserForm, ProductForm
 from django.core.mail import EmailMessage
 from . import generate_invoice
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
@@ -46,20 +46,33 @@ class ProductDetailView(DetailView):
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
+    form_class = ProductForm
     template_name = 'index/new_product.html'
-    fields = ['name', 'description', 'price', 'photo']
+    success_url = '?success'
+
+    def get_form_kwargs(self):
+        kwargs = super(ProductCreateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
     def form_valid(self, form):
-        obj = form.save(commit=False)
-        obj.manufacturer = self.request.user
-        obj.save()
-        return redirect('/')
+        form.instance.manufacturer = self.request.user
+        return super().form_valid(form)
 
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
+    form_class = ProductForm
     template_name = 'index/edit_product.html'
-    fields = ['name', 'description', 'price', 'photo']
+
+    def get_form_kwargs(self):
+        kwargs = super(ProductUpdateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.manufacturer = self.request.user
+        return super().form_valid(form)
 
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
@@ -339,4 +352,3 @@ def cabinet(request):
             'email': user.email,
         }
     return render(request, 'index/cabinet.html', {'form': form, 'user_data': user_data})
-

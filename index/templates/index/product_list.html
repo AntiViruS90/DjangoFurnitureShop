@@ -22,13 +22,8 @@
                     </div>
                 </form>
             </div>
-
-
         </div>
-
-
     </div>
-
     <hr class="mt-0 mb-2">
     {% if request.user|group_tag:"Provider" %}
         <a href="{% url 'new_product' %}" class="btn btn-success mb-2">Add Product</a>
@@ -44,13 +39,11 @@
                         </h4>
                     </div>
                     <div class="card-body">
-
-                            {% if product.photo %}
-                                <a href="{% url 'product_detail' pk=product.pk %}">
-                                    <img src="{{ product.photo.url }}" alt="{{ product.name }}" width="100%" height="auto">
-                                </a>
-                            {% endif %}
-
+                        {% if product.photo %}
+                            <a href="{% url 'product_detail' pk=product.pk %}">
+                                <img src="{{ product.photo.url }}" alt="{{ product.name }}" width="100%" height="auto">
+                            </a>
+                        {% endif %}
                         <ul class="list-unstyled mt-3 mb-4">
                             <li><h4>Manufacturer: {{ product.manufacturer }}</h4></li>
                             <li class="date"><h5>{{ product.created_date }}</h5></li>
