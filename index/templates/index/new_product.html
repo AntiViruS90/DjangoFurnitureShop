@@ -9,6 +9,7 @@
         <form method="post" class="product-form" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form|crispy }}
+            <p><small>Additional photos - Maximum number of photos to upload: </small><b><em>9</em></b></p>
             <button class="btn btn-primary btn-md my-0 mt-2" type="submit" name="save">Save</button>
         </form>
     {% else %}
