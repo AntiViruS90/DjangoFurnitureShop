@@ -1,5 +1,4 @@
 from django.urls import path
-
 from . import views
 from .views import *
 from django.conf.urls.static import static
@@ -7,9 +6,8 @@ from django.conf import settings
 
 
 urlpatterns = [
-    # path('', views.product_list, name='product_list'),
     path('', ProductListView.as_view(), name='product_list'),
-    path('product_detail/<pk>/', ProductDetailView.as_view(), name='product_detail'),
+    path('product_detail/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
     path('new_product/', ProductCreateView.as_view(), name='new_product'),
     path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('cart/', CartView.as_view(), name='cart'),
@@ -26,5 +24,3 @@ urlpatterns = [
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# Create your tests here.  
- 

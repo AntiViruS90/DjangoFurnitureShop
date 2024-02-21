@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.utils.decorators import method_decorator
 from django.utils import timezone
 from .models import Product, Comment, Order, OrderProduct, UserAddress
 from .forms import CommentForm, CheckoutForm, UserForm, ProductForm
@@ -41,8 +42,28 @@ class ProductListView(ListView):
         return object_list
 
 
-class ProductDetailView(DetailView):
-    model = Product
+class ProductDetailView(LoginRequiredMixin, View):
+    template_name = 'index/product_detail.html'
+
+    def get(self, request, pk):
+        product = get_object_or_404(Product, pk=pk)
+        comments = Comment.objects.filter(product=product)
+        comment_form = CommentForm()
+
+        context = {'product': product, 'comments': comments, 'comment_form': comment_form}
+        return render(request, self.template_name, context)
+
+    def post(self, request, pk):
+        product = get_object_or_404(Product, pk=pk)
+        comment_form = CommentForm(request.POST)
+
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.product = product
+            comment.user = request.user
+            comment.save()
+
+        return redirect('product_detail', pk=pk)
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -314,39 +335,6 @@ def remove_single_product_from_cart(request, pk):
     else:
         messages.info(request, 'You have no order')
         return redirect('product_detail', pk=pk)
-
-
-@login_required
-def comment(request, id):
-    product_comment = get_object_or_404(Product, id=id)  # Product.objects.get(id=id)
-    comments_all = Comment.objects.filter(post=product_comment,
-                                          approved_comment=True)  # product_comment.comment_set.filter(active=True) models.py
-    form_comment = CommentForm(request.POST)  # forms.py
-    if request.POST and form_comment.is_valid():
-        # if form.is_valid():
-        comment_new = form_comment.save(commit=False)
-        comment_new.post = product_comment
-        comment_new.save()
-        comment_new = Comment.objects.create()
-        comment_new.author = request.POST.get('author')
-        comment_new.post = request.POST.get('post')
-        comment_new.approved_comment = product_comment
-        comment_new.save()
-        comment_mas = str(comment_new.textarea)
-        my_mas = comment_mas.split()
-        bad_words = ['ужасный', 'плохой', 'плохо', 'тварь', 'твари', 'кошмар', 'черт', 'bad']
-        for element in my_mas:
-            if element not in bad_words:
-                comment_new.approved_comment = True
-            else:
-                comment_new.approved_comment = False
-                break
-        comment_new.save()
-    else:
-        form_comment = CommentForm()
-
-    context = {'form_comment': form_comment, 'comments_all': comments_all}  # 'comment': product_comment
-    return render(request, 'index/product_detail.html', context)
 
 
 def contacts(request):

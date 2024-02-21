@@ -15,3 +15,10 @@ class AttachmentInline(admin.StackedInline):
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
     inlines = [AttachmentInline]
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['user', 'product', 'text', 'rating', 'created_date']
+    list_filter = ['product', 'rating', 'created_date']
+    search_fields = ['user__username', 'product__name', 'text']

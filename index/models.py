@@ -3,7 +3,7 @@ from django.db import models
 from django.shortcuts import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.contrib.auth.models import AbstractUser, Group, Permission, User
 
 
 class Product(models.Model):
@@ -34,6 +34,11 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('product_detail', kwargs={'pk': self.pk})
 
+    def average_rating(self):
+        total_rating = sum(comment.rating for comment in self.comments.all())
+        num_comments = self.comments.count()
+        return total_rating / num_comments if num_comments else 0
+
 
 class Attachment(models.Model):
     product = models.ForeignKey(Product, verbose_name=_('Product'), on_delete=models.CASCADE)
@@ -41,18 +46,14 @@ class Attachment(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey('index.Product', on_delete=models.CASCADE, related_name='comments')
-    author = models.CharField(max_length=200)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     text = models.TextField()
+    rating = models.PositiveIntegerField(choices=[(i, i) for i in range(1, 6)], null=True)
     created_date = models.DateTimeField(default=timezone.now)
-    approved_comment = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.text
-
-    def approve(self):
-        self.approved_comment = True
-        self.save()
+        return f"{self.user.username} - {self.product.name} - {self.created_date}"
 
 
 class OrderProduct(models.Model):

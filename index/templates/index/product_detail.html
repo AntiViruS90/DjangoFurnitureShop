@@ -32,12 +32,17 @@
                 </button>
             </div>
         </div>
+        <div>
+            <h5 class="h5 my-2">Rating: <span><b>{{ product.average_rating|floatformat:1 }}</b>
+            <img style="margin-top: -6px;" src="{% static 'image/star.png' %}" alt="Star" width="24px"></span>
+        </h5>
+        </div>
+
         <div class="col-lg-6 col-md-8">
             <p class="text_description">{{ product.description|linebreaksbr }}</p>
             <p><b>$ {{ product.price|linebreaksbr }}</b></p>
             <hr class="mb-2">
         </div>
-
     </div>
     <div>
         {% if request.user|group_tag:"Provider" %}
@@ -50,6 +55,36 @@
         {% if request.user|group_tag:"Customer" %}
             <a href="{% url 'add_to_cart' pk=product.pk %}" class="btn btn-primary btn-md my-0 mb-2 p">Add to cart</a>
             <a href="{% url 'remove_from_cart' pk=product.pk %}" class="btn btn-danger btn-md mb-2 my-0 p">Remove from cart</a>
+        {% endif %}
+        <hr class="mb-2 col-lg-6 col-md-8">
+    </div>
+    <div class="container">
+        <div class="col-lg-6 col-md-8 col-12">
+            {% if comments %}
+                <h3>Comments:</h3>
+                <div class="nav">
+                    {% for comment in comments %}
+                        <div>
+                            <h4 class="h4">{{ comment.user.username }}</h4>
+                            <div class="text_description"><p>{{ comment.text }}</p></div>
+                            <h5><b><em>Rating: {{ comment.rating }}</em></b></h5>
+                        </div>
+                        <hr class="my-2 col-lg-6 col-md-8">
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No comments yet.</p>
+            {% endif %}
+        </div>
+        {% if request.user|group_tag:"Customer" %}
+            <div class="col-lg-6 col-md-8 col-12">
+                <h3 class="h3">Add a Comment:</h3>
+                <form action="" method="post" class="comment-form">
+                    {% csrf_token %}
+                    {{ comment_form|crispy }}
+                    <button type="submit" class="btn btn-primary mt-2">Submit Commit</button>
+                </form>
+            </div>
         {% endif %}
     </div>
 {% endblock content %}
