@@ -127,7 +127,8 @@ def send_order_notification_to_manufacturer(order):
             'New Order Notification',
             f'A new order has been placed with the following products:\n{", ".join(product_info)}\n\n'
             f'Total number of products: {sum(product.quantity for product in products_ordered)}\n'
-            f'Shipping Address: {order.shipping_address.city, order.shipping_address.name, order.shipping_address.surname}\n',
+            f'Shipping Address: '
+            f'{order.shipping_address.city, order.shipping_address.name, order.shipping_address.surname, order.shipping_address.street, order.shipping_address.house_number}\n',
             'slava90nikitin90@gmail.com',
             [manufacturer.email]
         )

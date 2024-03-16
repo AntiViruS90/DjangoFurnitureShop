@@ -41,7 +41,7 @@
                     <div class="card-body">
                         {% if product.photo %}
                             <a href="{% url 'product_detail' pk=product.pk %}">
-                                <img src="{{ product.photo.url }}" alt="{{ product.name }}" width="100%" height="auto">
+                                <img class="shadow-lg shadow-sm" style="border-radius: 0.375rem;" src="{{ product.photo.url }}" alt="{{ product.name }}" width="100%" height="auto">
                             </a>
                         {% endif %}
                         <ul class="list-unstyled mt-3 mb-4">
